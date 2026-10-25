@@ -1,0 +1,8 @@
+; Program 2: Swap values between Register 1 and Register 2 using a temporary Register 3
+210A ; Load immediate value 0A into register 1
+220B ; Load immediate value 0B into register 2
+4013 ; Move contents of register 1 to temp register 3 (R3 = 0A)
+4021 ; Move contents of register 2 to register 1 (R1 = 0B)
+4032 ; Move contents of temp register 3 to register 2 (R2 = 0A)
+31FF ; Store register 1 (now 0B) into memory location FF (Display on screen)
+C000 ; Halt execution
