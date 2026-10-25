@@ -1,0 +1,105 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "Execution Engine" {
+  enum CpuState {
+    READY
+    RUNNING
+    HALTED
+    ERROR
+  }
+
+  class VoleSimulator {
+    - memory: Memory
+    - registers: RegisterFile
+    - cpu: CPU
+    - screen: Screen
+    + loadProgram(startAddress: uint8_t, bytes: vector<uint8_t>): bool
+    + step(): bool
+    + run(): void
+    + reset(): void
+    + getMemory(): const Memory&
+    + getRegisters(): const RegisterFile&
+    + getCPU(): const CPU&
+    + getScreen(): const Screen&
+  }
+
+  class CPU {
+    - pc: uint8_t
+    - ir: uint16_t
+    - state: CpuState
+    - alu: ALU
+    - registers: RegisterFile&
+    + CPU(regs: RegisterFile&)
+    + fetch(mem: Memory&): void
+    + executeNext(mem: Memory&): void
+    + getPC(): uint8_t
+    + getIR(): uint16_t
+    + getState(): CpuState
+    + reset(): void
+  }
+}
+
+package "Core Components" {
+  class Memory {
+    - data: std::array<uint8_t, 256>
+    + readByte(address: uint8_t): uint8_t
+    + writeByte(address: uint8_t, value: uint8_t): void
+    + clear(): void
+  }
+
+  class RegisterFile {
+    - registers: std::array<uint8_t, 16>
+    + get(regNum: uint8_t): uint8_t
+    + set(regNum: uint8_t, value: uint8_t): void
+    + clear(): void
+  }
+
+  class ALU {
+    + addTwoComplement(val1: uint8_t, val2: uint8_t): uint8_t
+    + addFloatingPoint(val1: uint8_t, val2: uint8_t): uint8_t
+    + bitwiseOR(val1: uint8_t, val2: uint8_t): uint8_t
+    + bitwiseAND(val1: uint8_t, val2: uint8_t): uint8_t
+    + bitwiseXOR(val1: uint8_t, val2: uint8_t): uint8_t
+    + rotateRight(val1: uint8_t, steps: uint8_t): uint8_t
+  }
+
+  class Decoder {
+    + {static} decode(byte1: uint8_t, byte2: uint8_t): Instruction
+  }
+
+  struct Instruction {
+    + opcode: uint8_t
+    + r: uint8_t
+    + x: uint8_t
+    + y: uint8_t
+    + address: uint8_t
+    + isValid(): bool
+    + toString(): std::string
+  }
+
+  class Screen {
+    - outputBuffer: std::string
+    + displayByte(value: uint8_t): void
+    + clear(): void
+    + getOutput(): std::string
+  }
+}
+
+' Relationships from Execution Engine
+VoleSimulator *-- Memory : owns
+VoleSimulator *-- RegisterFile : owns
+VoleSimulator *-- CPU : owns
+VoleSimulator *-- Screen : owns
+
+CPU o-- RegisterFile : references
+CPU *-- ALU : contains
+CPU ..> Decoder : uses
+CPU ..> Memory : reads/writes via fetch & execute
+CPU ..> Instruction : creates/uses
+
+' Core Components Relationships
+Decoder ..> Instruction : builds
+Memory ..> Screen : routes address 0xFF output to
+
+@enduml
