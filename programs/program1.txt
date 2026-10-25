@@ -1,0 +1,8 @@
+; Program 1: Add three numbers (5 + 6 + 7) and display result on screen (FF)
+2105 ; Load immediate value 0x05 into register R1
+2206 ; Load immediate value 0x06 into register R2
+2307 ; Load immediate value 0x07 into register R3
+5412 ; Add registers R1 and R2, put result (0x0B) into register R4
+5543 ; Add registers R4 and R3, put final result (0x12) into register R5
+35FF ; Store register R5 into memory location FF (Display on screen)
+C000 ; Halt execution
