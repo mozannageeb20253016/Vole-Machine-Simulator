@@ -1,0 +1,18 @@
+#include "Screen.h"
+#include <iostream>
+#include <iomanip>
+Screen::Screen() {
+    outputBuffer = "";
+}
+void Screen::displayByte(uint8_t value) {
+    outputBuffer += std::to_string(value) + " ";
+    std::cout << "[Screen Output - Address 0xFF]: "
+        << value << " (Hex: 0x" << std::hex << std::uppercase << (int)value << std::dec << ")"
+        << std::endl;
+}
+void Screen::clear() {
+    outputBuffer.clear();
+}
+std::string Screen::getOutput() const {
+    return outputBuffer;
+}
