@@ -1,0 +1,12 @@
+#ifndef PROGRAM_LOADER_H
+#define PROGRAM_LOADER_H
+
+#include "Memory.h"
+#include <string>
+#include <cstdint>
+
+#endif // PROGRAM_LOADER_H
+class ProgramLoader {
+public:
+    static bool loadProgramFromFile(const std::string& filename, Memory& memory, uint8_t startAddress = 0x00);
+};
