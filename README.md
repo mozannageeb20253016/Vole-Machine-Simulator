@@ -25,6 +25,26 @@ Tested Assembly Codes
 Final UML Diagram
 ![UML Diagram](uml_diagram.png)
 
-Deliverable Links
-Presentation Video: https://drive.google.com/file/d/16K1h1PGa79EUbMnIs6K09A5yaPay6ouB/view?usp=drivesdk
+
+---
+
+Part 2 and Part 3 Updates
+
+Project Implementation
+We have fully implemented the simulator in C++ using OOP concepts. The program loads Vole assembly instructions from text files, stores them in memory, executes them step by step, and prints the machine status.
+
+How to Run
+1. Open Visual Studio and include all .h and .cpp files.
+2. Build and run the project.
+3. Enter the input file name when prompted.
+
+Tested Programs
+1. Addition Program: Loads numbers, adds them using ALU, and writes to address FF.
+2. Swap Program: Swaps values between two registers using a temporary register.
+3. Logic Programs: Tested JUMP, AND, OR, and XOR operations.
+
+
+Links
+Presentation Video part 1: https://drive.google.com/file/d/16K1h1PGa79EUbMnIs6K09A5yaPay6ouB/view?usp=drivesdk
+part 2 video :
 GitHub Repo: https://github.com/mozannageeb20253016/Vole-Machine-Simulator.git
