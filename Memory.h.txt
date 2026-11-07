@@ -1,0 +1,15 @@
+#ifndef MEMORY_H
+#define MEMORY_H
+#include <array>
+#include <cstdint>
+class Memory {
+private:
+    std::array<std::uint8_t, 256> data;
+public:
+    Memory();
+    std::uint8_t readByte(std::uint8_t address) const;
+    void writeByte(std::uint8_t address, std::uint8_t value);
+    void clear();
+    const std::array<std::uint8_t, 256>& getData() const;
+};
+#endif
