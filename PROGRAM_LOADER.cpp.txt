@@ -1,0 +1,49 @@
+#include "PROGRAM_LOADER.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <cstdint>
+#include <cctype>
+bool ProgramLoader::loadProgramFromFile(const std::string& filename, Memory& memory, uint8_t startAddress) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open program file: " << filename << std::endl;
+        return false;
+    }
+    if (startAddress > 0xFE || (startAddress % 2 != 0)) {
+        std::cerr << "Error: Invalid starting address. Must be even and <= 0xFE." << std::endl;
+        return false;
+    }
+    std::string line;
+    int currentAddress = startAddress;
+    while (std::getline(file, line)) {
+        if (line.empty() || line[0] == ';') continue;
+        std::stringstream ss(line);
+        std::string instructionHex;
+        if (ss >> instructionHex) {
+            if (instructionHex.length() != 4) {
+                std::cerr << "Error: Instruction must be exactly 4 hex characters: " << instructionHex << std::endl;
+                return false;
+            }
+            for (char c : instructionHex) {
+                if (!isxdigit(static_cast<unsigned char>(c))) {
+                    std::cerr << "Error: Invalid hex character in instruction: " << instructionHex << std::endl;
+                    return false;
+                }
+            }
+            if (currentAddress > 0xFF - 1) {
+                std::cerr << "Error: Program exceeds memory boundary (0xFF)." << std::endl;
+                return false;
+            }
+            std::string b1Str = instructionHex.substr(0, 2);
+            std::string b2Str = instructionHex.substr(2, 2);
+            uint8_t byte1 = static_cast<uint8_t>(std::stoi(b1Str, nullptr, 16));
+            uint8_t byte2 = static_cast<uint8_t>(std::stoi(b2Str, nullptr, 16));
+            memory.writeByte(static_cast<uint8_t>(currentAddress++), byte1);
+            memory.writeByte(static_cast<uint8_t>(currentAddress++), byte2);
+        }
+    }
+    file.close();
+    return true;
+
+}
