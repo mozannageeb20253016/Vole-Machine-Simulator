@@ -1,0 +1,14 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+#include <string>
+#include <cstdint>
+class Screen {
+private:
+    std::string outputBuffer;
+public:
+    Screen();
+    void displayByte(uint8_t value);
+    void clear();
+    std::string getOutput() const;
+};
+#endif
