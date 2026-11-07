@@ -1,0 +1,17 @@
+#include "Memory.h"
+#include <cstdint>
+Memory::Memory() {
+    clear();
+}
+std::uint8_t Memory::readByte(std::uint8_t address) const {
+    return data[address];
+}
+void Memory::writeByte(std::uint8_t address, std::uint8_t value) {
+    data[address] = value;
+}
+void Memory::clear() {
+    data.fill(0);
+}
+const std::array<std::uint8_t, 256>& Memory::getData() const {
+    return data;
+}
