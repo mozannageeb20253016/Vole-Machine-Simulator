@@ -46,5 +46,5 @@ Tested Programs
 
 Links
 Presentation Video part 1: https://drive.google.com/file/d/16K1h1PGa79EUbMnIs6K09A5yaPay6ouB/view?usp=drivesdk
-part 2 video :
+part 2 video :   https://drive.google.com/file/d/1lUDI5F3iANzpRrl3wvbnlbZQaXcqd99i/view?usp=drive_link
 GitHub Repo: https://github.com/mozannageeb20253016/Vole-Machine-Simulator.git
